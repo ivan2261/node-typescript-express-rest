@@ -12,7 +12,7 @@ export abstract class BaseService<T> {
      * @returns {Promise<T[]>}
      */
     async findAll(): Promise<T[]> {
-        return await this.Repository.find() as T[];
+        return await this.Repository.find().lean() as T[];
     }
 
     /**
@@ -21,7 +21,7 @@ export abstract class BaseService<T> {
      * @returns {Promise<T>}
      */
     async findById(id: string): Promise<T> {
-        const doc: T = await this.Repository.findById(id);
+        const doc: T = await this.Repository.findById(id).lean();
         return doc;
     }
 

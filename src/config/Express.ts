@@ -11,7 +11,6 @@ import { Container } from 'typedi';
 import { setupLogging } from './Logging';
 import { setupSwagger } from './Swagger';
 import { setupAuth } from './Authentication';
-import { UserController } from '../controllers/UserController';
 
 export class ExpressConfig {
 
@@ -36,9 +35,9 @@ export class ExpressConfig {
     setupControllers() {
         useContainer(Container);
 
-        // const controllersPath = path.resolve('dist', 'controllers');
+        const controllersPath = path.resolve(__dirname, '../controllers/*');
         useExpressServer(this.app, {
-            controllers: [UserController]
+            controllers: [controllersPath]
         });
     }
 

@@ -1,49 +1,27 @@
-import * as winston from 'winston';
-import * as config from 'config';
-import * as expressWinston from 'express-winston';
 import { logger } from '../common/logging';
 
-const level = config.get('loglevel');
-
 export function setupLogging(app) {
-    // Development Logger
-    // const env = config.util.getEnv('NODE_ENV');
-
-    if (level === 'info') {
-        logger.add(winston.transports.Console, {
-            type: 'verbose',
-            colorize: true,
-            prettyPrint: true,
-            handleExceptions: true,
-            humanReadableUnhandledException: true
-        });
-    }
-
-    setupExpress(app);
+    app.use(expressLogging());
 }
 
-function setupExpress(app) {
-    // error logging
-    if (level === 'debug') {
-        app.use(expressWinston.errorLogger({
-            transports: [
-                new winston.transports.Console({
-                    json: true,
-                    colorize: true
-                })
-            ]
-        }));
-    }
+function expressLogging() {
+    return (req: any, res: any, next: () => any) => {
+        const start = new Date().getTime();
 
-    // request logging
-    if (level === 'info') {
-        app.use(expressWinston.logger({
-            transports: [
-                new winston.transports.Console({
-                    json: true,
-                    colorize: true
-                })
-            ]
-        }));
-    }
+        next();
+
+        let logLevel: string = 'info';
+        if (req.status >= 500) {
+            logLevel = 'error';
+        } else if (req.status >= 400) {
+            logLevel = 'warn';
+        } else if (req.status >= 100) {
+            logLevel = 'info';
+        }
+
+        const ms = new Date().getTime() - start;
+        const msg: string = `${req.method} ${req.originalUrl} ${req.status} ${ms}ms`;
+
+        logger.log(logLevel, msg);
+    };
 }

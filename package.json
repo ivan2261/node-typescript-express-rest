@@ -1,53 +1,44 @@
 {
-    "name": "node-microservice-demo",
+    "name": "node-typescript-express-rest",
     "version": "1.0.0",
     "description": "Nodejs + TypeScript + Swagger + Docker + Express seed project",
     "main": "index.js",
     "scripts": {
         "check": "npm-check --skip-unused",
         "start": "npm-run-all -s clean build start:simple",
-        "start:simple": "node .",
-        "start:dev": "npm-run-all -s clean build -p watch:*",
-        "start:debug": "npm-run-all -s clean build -p watch:* debug",
+        "start:simple": "node dist/index.js",
+        "start:dev": "nodemon --watch src -e ts,tsx --exec ts-node src/index.ts",
+        "start:watch": "npm-run-all -s clean build -p watch:*",
         "clean": "npm-run-all -p clean:*",
         "clean:dist": "rimraf dist",
         "clean:cov": "rimraf coverage",
-        "debug": "node-debug",
         "build": "npm-run-all -s build:ts build:swagger",
         "build:ts": "tsc",
-        "build:swagger": "node ./dist/tasks/swagger.js",
+        "build:swagger": "node dist/tasks/swagger.js",
         "watch:ts": "tsc --watch",
-        "watch:node": "nodemon --debug --delay 2.5",
-        "lint": "./node_modules/tslint/bin/tslint ./src/{,**/}*.ts",
+        "lint": "tslint src/{,**/}*.ts",
         "pretest": "npm-run-all -s clean build",
         "test": "npm-run-all -s test:cov test:cov:remap",
         "test:api": "mocha dist/tests/api/*.spec.js -R spec --bail",
         "test:unit": "mocha dist/tests/unit/*.spec.js -R spec --bail",
         "test:cov": "istanbul cover node_modules/mocha/bin/_mocha -- dist/**/*.spec.js -R spec --bail",
         "test:cov:remap": "npm-run-all test:cov:remap:*",
-        "test:cov:remap:html": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/lcov-report -t html",
-        "test:cov:remap:loc": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/lcov.info -t lcovonly"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/swimlane/node-microservice-demo.git"
+        "test:cov:remap:html": "remap-istanbul -i coverage/coverage.json -o coverage/lcov-report -t html",
+        "test:cov:remap:loc": "remap-istanbul -i coverage/coverage.json -o coverage/lcov.info -t lcovonly"
     },
     "keywords": [
         "typescript",
         "swagger",
-        "docker",
         "express"
     ],
     "engines": {
-        "node": "~6.3"
+        "node": "10.x.x",
+        "npm": "6.x.x"
     },
     "engineStrict": true,
-    "author": "Swimlane",
+    "author": "Ivan",
     "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/swimlane/node-microservice-demo/issues"
-    },
-    "homepage": "https://github.com/swimlane/node-microservice-demod#readme",
+    "homepage": "https://github.com/ivan2261/node-typescript-express-rest#readme",
     "dependencies": {
         "bcrypt-nodejs": "0.0.3",
         "bluebird": "^3.5.5",
@@ -71,7 +62,7 @@
         "swagger-client": "^3.9.6",
         "swagger-tools": "^0.10.1",
         "typedi": "^0.8.0",
-        "winston": "^2.2.0"
+        "winston": "^3.2.1"
     },
     "devDependencies": {
         "@types/bcrypt-nodejs": "0.0.30",
