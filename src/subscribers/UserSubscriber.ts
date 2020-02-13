@@ -1,10 +1,10 @@
 import { EventSubscriber, On } from 'event-dispatch';
 
 @EventSubscriber()
-export class PetSubscriber {
+export class UserSubscriber {
 
-    @On('onPetCreate')
-    onPetCreate({ socket, name }) {
+    @On('onUserCreate')
+    onUserCreate({ socket, name }) {
         // console.log('name', socket, name);
     }
 

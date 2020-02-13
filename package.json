@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "check": "npm-check --skip-unused",
+        "preinstall": "npm i -g nodemon ts-node rimraf npm-run-all npm-check",
         "start": "npm-run-all -s clean build start:simple",
         "start:simple": "node dist/index.js",
         "start:dev": "nodemon --watch src -e ts,tsx --exec ts-node src/index.ts",
@@ -51,7 +52,7 @@
         "express": "^4.14.0",
         "express-ping": "^1.1.0",
         "express-validator": "^4.3.0",
-        "express-winston": "^1.4.2",
+        "express-winston": "^4.0.2",
         "glob": "^7.0.5",
         "mongoose": "^5.7.1",
         "passport": "^0.4.1",

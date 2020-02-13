@@ -1,27 +1,25 @@
-import { logger } from '../common/logging';
+import * as expressWinston from 'express-winston';
+import { logger } from '../common/logger';
 
 export function setupLogging(app) {
-    app.use(expressLogging());
+    process.on('unhandledRejection', function (reason, p) {
+        console.log('Possibly Unhandled Rejection at: ', p, '\nReason: ', reason);
+    });
+
+    setupExpress(app);
 }
 
-function expressLogging() {
-    return (req: any, res: any, next: () => any) => {
-        const start = new Date().getTime();
-
-        next();
-
-        let logLevel: string = 'info';
-        if (req.status >= 500) {
-            logLevel = 'error';
-        } else if (req.status >= 400) {
-            logLevel = 'warn';
-        } else if (req.status >= 100) {
-            logLevel = 'info';
-        }
-
-        const ms = new Date().getTime() - start;
-        const msg: string = `${req.method} ${req.originalUrl} ${req.status} ${ms}ms`;
-
-        logger.log(logLevel, msg);
-    };
+function setupExpress(app) {
+    app.use(expressWinston.logger({
+        winstonInstance: logger,
+        msg: '{{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
+        expressFormat: true,
+        meta: false,
+        statusLevels: {
+            'success': 'info',
+            'warn': 'warn',
+            'error': 'error'
+        },
+        ignoreRoute: (req, res) => false
+    }));
 }

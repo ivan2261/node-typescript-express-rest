@@ -35,9 +35,11 @@ export class ExpressConfig {
     setupControllers() {
         useContainer(Container);
 
-        const controllersPath = path.resolve(__dirname, '../controllers/*');
         useExpressServer(this.app, {
-            controllers: [controllersPath]
+            defaultErrorHandler: false,
+            controllers: [path.resolve(__dirname, '../controllers/*')],
+            middlewares: [path.resolve(__dirname, '../middlewares/*')],
+            interceptors: [path.resolve(__dirname, '../interceptors/*')]
         });
     }
 

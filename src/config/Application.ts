@@ -1,7 +1,7 @@
 import { ExpressConfig } from './Express';
 import { setupSockets } from './Socket';
 import { connectMongo } from './Mongo';
-import { logger } from '../common/logging';
+import { logger } from '../common/logger';
 import * as config from 'config';
 
 export class Application {
@@ -21,16 +21,16 @@ export class Application {
         // Start Webserver
         this.server = this.express.app.listen(port, () => {
             logger.info(`
-                ------------
-                Server Started!
+    ------------
+    Server Started!
 
-                Http: http://localhost:${port}
-                Debugger: http://127.0.0.1:${port}/?ws=127.0.0.1:${port}&port=${debugPort}
-                Health: http://localhost:${port}/ping
+    Http: http://localhost:${port}
+    Debugger: http://127.0.0.1:${port}/?ws=127.0.0.1:${port}&port=${debugPort}
+    Health: http://localhost:${port}/ping
 
-                API Docs: http://localhost:${port}/docs
-                API Spec: http://localhost:${port}/api-docs
-                ------------
+    API Docs: http://localhost:${port}/docs
+    API Spec: http://localhost:${port}/api-docs
+    ------------
             `);
         });
 

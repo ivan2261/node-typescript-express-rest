@@ -1,5 +1,5 @@
-import { Req, Res, Controller, Get, Param } from 'routing-controllers';
-import { Request, Response } from 'express';
+import { Req, Controller, Get, Param } from 'routing-controllers';
+import { Request } from 'express';
 import { Inject } from 'typedi';
 import { UserService, User } from '../services/UserService';
 
@@ -24,9 +24,8 @@ export class UserController {
      *           $ref: '#/definitions/UserModel'
      */
     @Get('/')
-    async getUsers(@Req() req: Request, @Res() res: Response) {
-        const data: User[] = await this.userService.findAll();
-        res.status(200).send(data);
+    async getUsers(): Promise<User[]> {
+        return this.userService.findAll();
     }
 
     /**
@@ -50,12 +49,12 @@ export class UserController {
      *           $ref: '#/definitions/UserModel'
      */
     @Get('/:id')
-    async getById(@Req() req: Request, @Res() res: Response,
-        @Param('id') id: string) {
+    async getById(@Req() req: Request,
+        @Param('id') id: string): Promise<User> {
+
         req.assert('id', 'id cannot be blank').notEmpty();
         const errors = req.validationErrors();
 
-        const data: User = await this.userService.findById(id);
-        res.status(200).send(data);
+        return this.userService.findById(id);
     }
 }

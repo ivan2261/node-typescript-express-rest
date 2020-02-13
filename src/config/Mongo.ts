@@ -1,4 +1,4 @@
-import { logger } from '../common/logging';
+import { logger } from '../common/logger';
 import * as config from 'config';
 import * as mongoose from 'mongoose';
 import * as bluebird from 'bluebird';

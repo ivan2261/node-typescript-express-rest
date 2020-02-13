@@ -18,7 +18,3 @@ const options: winston.LoggerOptions = {
 };
 
 export const logger = winston.createLogger(options);
-
-process.on('unhandledRejection', function (reason, p) {
-    logger.warn('Possibly Unhandled Rejection at: Promise ', p, ' reason: ', reason);
-});

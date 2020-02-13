@@ -3,7 +3,7 @@ import * as passport from 'passport';
 import * as glob from 'glob';
 import * as path from 'path';
 import { defaultMetadataRegistry } from 'event-dispatch/MetadataRegistry';
-import { logger } from '../common/logging';
+import { logger } from '../common/logger';
 
 // include subscribers dynamically
 let files = glob.sync('./dist/subscribers/*.js');
@@ -40,4 +40,4 @@ export function setupSockets(app) {
     });
 
     return io;
-};
+}
