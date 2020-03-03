@@ -5,7 +5,7 @@ import * as cors from 'cors';
 import * as health from 'express-ping';
 import * as expressValidator from 'express-validator';
 
-import { useExpressServer, useContainer } from 'routing-controllers';
+import { useExpressServer, useContainer, Action } from 'routing-controllers';
 import { Container } from 'typedi';
 
 import { setupLogging } from './Logging';
@@ -39,7 +39,13 @@ export class ExpressConfig {
             defaultErrorHandler: false,
             controllers: [path.resolve(__dirname, '../controllers/*')],
             middlewares: [path.resolve(__dirname, '../middlewares/*')],
-            interceptors: [path.resolve(__dirname, '../interceptors/*')]
+            interceptors: [path.resolve(__dirname, '../interceptors/*')],
+
+            authorizationChecker: async (action: Action, roles: string[]) => {
+                const token = action.request.headers['authorization'];
+                // TODO: 权限控制
+                return true;
+            }
         });
     }
 

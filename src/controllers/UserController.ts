@@ -1,9 +1,14 @@
-import { Req, Controller, Get, Param } from 'routing-controllers';
+import { Controller, Get, Req, Param, Authorized } from 'routing-controllers';
 import { Request } from 'express';
 import { Inject } from 'typedi';
 import { UserService, User } from '../services/UserService';
 
-@Controller('/users')
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ */
+@Controller('/user')
 export class UserController {
 
     @Inject()
@@ -13,8 +18,9 @@ export class UserController {
      * @swagger
      * /users:
      *   get:
-     *     description: gets some users
-     *     operationId: getUsers
+     *     description: Get some users
+     *     tags:
+     *       - User
      *     produces:
      *       - application/json
      *     responses:
@@ -23,17 +29,19 @@ export class UserController {
      *         schema:
      *           $ref: '#/definitions/UserModel'
      */
-    @Get('/')
-    async getUsers(): Promise<User[]> {
+    @Authorized()
+    @Get('s')
+    async getUsers(@Req() req: Request): Promise<User[]> {
         return this.userService.findAll();
     }
 
     /**
      * @swagger
-     * /users/{id}:
+     * /user/{id}:
      *   get:
      *     description: Get a user by id
-     *     operationId: getById
+     *     tags:
+     *       - User
      *     produces:
      *       - application/json
      *     parameters:

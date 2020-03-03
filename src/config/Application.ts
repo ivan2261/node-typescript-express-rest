@@ -17,15 +17,17 @@ export class Application {
 
         const port = config.get('ports.http');
         const debugPort = config.get('ports.debug');
+        const loglevel = config.get('loglevel');
 
         // Start Webserver
         this.server = this.express.app.listen(port, () => {
             logger.info(`
     ------------
     Server Started!
+    App is running in ${this.express.app.get('env')} mode
+    Logging initialized at ${loglevel} level
 
     Http: http://localhost:${port}
-    Debugger: http://127.0.0.1:${port}/?ws=127.0.0.1:${port}&port=${debugPort}
     Health: http://localhost:${port}/ping
 
     API Docs: http://localhost:${port}/docs

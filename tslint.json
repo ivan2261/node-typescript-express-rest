@@ -52,7 +52,7 @@
             }
         ],
         "no-internal-module": true,
-        "no-trailing-whitespace": true,
+        "no-trailing-whitespace": false,
         "jsdoc-format": true
     }
 }

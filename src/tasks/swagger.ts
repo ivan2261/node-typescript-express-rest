@@ -12,7 +12,19 @@ const options = {
             title: name,
             version,
             description
-        }
+        },
+        securityDefinitions: {
+            ApiKeyAuth: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'Authorization'
+            }
+        },
+        security: [
+            {
+                ApiKeyAuth: []
+            }
+        ]
     },
     apis: [...models, ...ctrls]
 };

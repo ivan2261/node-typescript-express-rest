@@ -3,7 +3,7 @@ ports:
     debug: 5858
 
 auth:
-    jwt_secret: 'supersecret'
+    jwt_secret: 'your-secret-whatever'
 
 mongo:
     url: 'mongodb+srv://root:123.com@cluster0-qbqrz.mongodb.net/test?retryWrites=true&w=majority'
