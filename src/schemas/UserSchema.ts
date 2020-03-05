@@ -27,6 +27,11 @@ userSchema.pre('save', function save(next) {
     });
 });
 
+userSchema.methods.hashPassword = function () {
+    const salt = bcrypt.genSaltSync(10);
+    this.password = bcrypt.hashSync(this.password, salt);
+};
+
 userSchema.methods.comparePassword = function (candidatePassword: string) {
     const qCompare = (util as any).promisify(bcrypt.compare);
     return qCompare(candidatePassword, this.password);

@@ -56,6 +56,7 @@ export class UserController {
      *         schema:
      *           $ref: '#/definitions/UserModel'
      */
+    @Authorized()
     @Get('/:id')
     async getById(@Req() req: Request,
         @Param('id') id: string): Promise<User> {

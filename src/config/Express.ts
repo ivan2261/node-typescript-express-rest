@@ -36,10 +36,11 @@ export class ExpressConfig {
         useContainer(Container);
 
         useExpressServer(this.app, {
-            defaultErrorHandler: false,
+            routePrefix: '/api',
             controllers: [path.resolve(__dirname, '../controllers/*')],
             middlewares: [path.resolve(__dirname, '../middlewares/*')],
             interceptors: [path.resolve(__dirname, '../interceptors/*')],
+            defaultErrorHandler: false,
 
             authorizationChecker: async (action: Action, roles: string[]) => {
                 const token = action.request.headers['authorization'];

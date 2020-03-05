@@ -13,6 +13,11 @@ const options = {
             version,
             description
         },
+        basePath: '/api',
+        produces: [
+            'application/json',
+            'text/html'
+        ],
         securityDefinitions: {
             ApiKeyAuth: {
                 type: 'apiKey',
