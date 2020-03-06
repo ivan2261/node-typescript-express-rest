@@ -2,6 +2,7 @@ import { Controller, Get, Req, Param, Authorized } from 'routing-controllers';
 import { Request } from 'express';
 import { Inject } from 'typedi';
 import { UserService, User } from '../services/UserService';
+import { CustomError } from '../common/customError';
 
 /**
  * @swagger
@@ -62,7 +63,11 @@ export class UserController {
         @Param('id') id: string): Promise<User> {
 
         req.assert('id', 'id cannot be blank').notEmpty();
+
         const errors = req.validationErrors();
+        if (errors) {
+            throw new CustomError('parameter error', errors);
+        }
 
         return this.userService.findById(id);
     }

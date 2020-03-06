@@ -4,8 +4,8 @@ import { EventSubscriber, On } from 'event-dispatch';
 export class UserSubscriber {
 
     @On('onUserCreate')
-    onUserCreate({ socket, name }) {
-        // console.log('name', socket, name);
+    onUserCreate({ socket, data }) {
+        console.log(data);
     }
 
 }

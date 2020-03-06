@@ -1,5 +1,6 @@
 import * as io from 'socket.io';
-import * as passport from 'passport';
+import * as socketioJwt from 'socketio-jwt';
+import * as config from 'config';
 import * as glob from 'glob';
 import * as path from 'path';
 import { defaultMetadataRegistry } from 'event-dispatch/MetadataRegistry';
@@ -12,18 +13,19 @@ files.map(f => { return require(path.resolve(f)); });
 export function setupSockets(app) {
     let server = io(app);
 
-    server.use((socket, next) => {
-        passport.authenticate('jwt', { session: false }, (err, user, info) => {
-            if (err) next(new Error('Error in passport authenticate'));
-            if (!user) next(new Error('Failed to authenticate oAuth token'));
-            socket.request.user = user;
-            return next();
-        })(socket.request, null, next);
+    // use jwt
+    server.use(socketioJwt.authorize({
+        secret: config.get('auth.jwt_secret').toString(),
+        handshake: true
+    }));
+
+    server.use((socket: any, next) => {
+        socket.request.user = socket.decoded_token;
+        return next();
     });
 
     server.on('connection', (socket) => {
         logger.info('Web Sockets initalized');
-        // const userId = socket.request.session.passport.user;
 
         // bind applicable subscribers to the socket
         defaultMetadataRegistry
@@ -33,7 +35,7 @@ export function setupSockets(app) {
                 eventNamesForThisHandler.forEach(eventName => {
                     const callback = eventHandler[eventName];
                     socket.on(eventName, (data) => {
-                        callback(Object.assign({ socket }, data));
+                        callback({ socket, data });
                     });
                 });
             });
