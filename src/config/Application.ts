@@ -3,6 +3,7 @@ import { setupSockets } from './Socket';
 import { connectMongo } from './Mongo';
 import { logger } from '../common/logger';
 import * as config from 'config';
+import { cron } from '../jobs/cron';
 
 export class Application {
 
@@ -38,6 +39,9 @@ export class Application {
 
         // Start Websockets
         setupSockets(this.server);
+
+        // Register cron job
+        cron.start();
     }
 
 }
