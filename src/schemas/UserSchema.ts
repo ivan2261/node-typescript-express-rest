@@ -6,6 +6,7 @@ import { User } from '../models/UserModel';
 type UserDocument = mongoose.Document & User;
 
 const userSchema = new mongoose.Schema({
+    userId: { type: String, unique: true },
     name: String,
     password: String,
     email: String,

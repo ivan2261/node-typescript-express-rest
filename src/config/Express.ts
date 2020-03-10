@@ -40,6 +40,7 @@ export class ExpressConfig {
             controllers: [path.resolve(__dirname, '../controllers/*')],
             middlewares: [path.resolve(__dirname, '../middlewares/*')],
             interceptors: [path.resolve(__dirname, '../interceptors/*')],
+            validation: false,
             defaultErrorHandler: false,
 
             authorizationChecker: async (action: Action, roles: string[]) => {

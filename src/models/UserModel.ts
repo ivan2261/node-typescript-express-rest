@@ -4,11 +4,11 @@
  *   UserModel:
  *     type: object
  *     required:
- *       - id
+ *       - userId
  *       - name
  *       - password
  *     properties:
- *       id:
+ *       userId:
  *         type: string
  *       name:
  *         type: string
@@ -18,12 +18,8 @@
  *         type: string
  */
 export class User {
-    id: string;
-
+    userId: string;
+    name: string;
     password: string;
-
     email: string;
-
-    constructor(public name: string = 'Austin') {
-    }
 }

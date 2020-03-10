@@ -32,10 +32,11 @@ export abstract class BaseService<T> {
 
     /**
      * @description Fetches all docs from the storage
+     * @param {any} projection
      * @returns {Promise<T[]>}
      */
-    async findAll(): Promise<T[]> {
-        return await this.Repository.find().lean() as T[];
+    async findAll(projection?: any): Promise<T[]> {
+        return await this.Repository.find({}, projection).lean() as T[];
     }
 
     /**
