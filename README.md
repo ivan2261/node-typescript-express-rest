@@ -1,14 +1,48 @@
-# Petstore Micro-service 
-NodeJS micro-service for the petstore module.
+# Node - Express - Typescript Project
+The main purpose of this repository is to show a good end-to-end project setup for writing Node code in TypeScript using Express and a NOSQL DB.
 
 ## Getting Started
 
 ### Pre-reqs
-- Install Node 6.x via [nvm](https://github.com/creationix/nvm)
+To build and run this app locally you will need a few things:
+- Install [Node.js](https://nodejs.org/en/)
+- Install [MongoDB](https://docs.mongodb.com/manual/installation/)
+- Install [VS Code](https://code.visualstudio.com/)
 
 ### Install
 - `npm install`
 - `npm start`
+
+### Running
+When running the project locally with `start`, the swagger docs will be deployed at: `http://localhost:8080/docs`, and the bearer token for authorization should be as follows:
+
+HEADER (LOCALHOST BASED ON DEFAULT SECRET KEY 'your-secret-whatever')
+```
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYW1lIjoiSmF2aWVyIEF2aWxlcyIsImVtYWlsIjoiYXZpbGVzbG9wZXouamF2aWVyQGdtYWlsLmNvbSJ9.rgOobROftUYSWphkdNfxoN2cgKiqNXd4Km4oz6Ex4ng
+```
+
+| method             | resource         | description                                                                                    |
+|:-------------------|:-----------------|:-----------------------------------------------------------------------------------------------|
+| `GET`              | `/users`         | returns the collection of users present in the DB                                                    |
+| `GET`              | `/user/:id`      | returns the specified id user                                                                        |
+| `POST`             | `/user`          | creates a user in the DB (object user to be includued in request's body)                             |
+| `PUT`              | `/user`          | updates an already created user in the DB (object user to be includued in request's body)      |
+| `DELETE`           | `/user/:id`      | deletes a user from the DB                                                                           |
+
+### Features:
+ * Nodemon - server auto-restarts when code changes
+ * Express 4.0
+ * Socket.io Websockets
+ * Swagger 2.0
+ * Cron jobs prepared
+
+### Included middleware:
+ * routing-controllers
+ * body-parser
+ * express-validator
+ * Winston Logger
+ * JWT auth express-jwt
+ * CORS
 
 ## Developing
 
